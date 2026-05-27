@@ -1,4 +1,4 @@
-# Ultimátní Generátor Hesel (Premium Password Generator)
+# Generátor Hesel
 
 Minimalistická, vysoce responzivní a prémiová single-page aplikace (SPA) pro generování bezpečných hesel. Navrženo s důrazem na maximální bezpečnost (čistě klientská logika bez backendových zranitelností), špičkové UI/UX po vzoru Apple/Linear a plnou mobilní responzivitu.
 
