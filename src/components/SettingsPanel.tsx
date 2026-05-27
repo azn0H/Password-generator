@@ -1,4 +1,6 @@
 import React from 'react';
+import { Switch } from "./ui/Switch";
+import { Label } from "./ui/Label";
 
 interface Props {
   t: any;
@@ -11,46 +13,52 @@ interface Props {
 
 export const SettingsPanel = ({ t, length, options, strength, setLength, handleOptionChange }: Props) => {
   const config = [
-    { id: 'uppercase', label: t.uppercase, sub: 'A-Z' },
-    { id: 'lowercase', label: t.lowercase, sub: 'a-z' },
-    { id: 'numbers', label: t.numbers, sub: '0-9' },
-    { id: 'symbols', label: t.symbols, sub: '!@#$' },
+    { id: 'uppercase', label: t.uppercase },
+    { id: 'lowercase', label: t.lowercase },
+    { id: 'numbers', label: t.numbers },
+    { id: 'symbols', label: t.symbols },
   ];
 
   return (
-    <div className="space-y-6 sm:space-y-8 w-full animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 flex-1">
+    <div className="w-full flex flex-col gap-12 sm:gap-16">
       
-      {/* Integrovaná sekce síly hesla */}
-      <div className="bg-slate-50 dark:bg-slate-800/30 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-700/50 transition-colors w-full shadow-sm">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{t.strength}</span>
-          <span className="text-sm font-bold text-slate-900 dark:text-white transition-all">
+      {/* Strength indicator - Wide LED line */}
+      <div>
+        <div className="flex items-center justify-between mb-5">
+          <span className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+            {t.strength}
+          </span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-zinc-900 dark:text-zinc-300">
             {strength < 2 ? t.weak : strength < 4 ? t.good : t.strong}
           </span>
         </div>
-        
-        {/* LED Indikátor síly */}
-        <div className="flex gap-1.5 h-1.5 w-full mb-8 shrink-0">
+        <div className="flex gap-1.5 h-1.5 w-full mb-8">
           {[...Array(5)].map((_, i) => (
             <div
               key={i}
-              className={`flex-1 rounded-full transition-all duration-700 ease-out ${
+              className={`flex-1 rounded-full transition-all duration-700 ease-out shadow-inner ${
                 i < strength 
                   ? strength < 2 
-                    ? 'bg-rose-500 dark:shadow-[0_0_10px_rgba(244,63,94,0.5)]' 
+                    ? 'bg-rose-500' 
                     : strength < 4 
-                      ? 'bg-amber-400 dark:shadow-[0_0_10px_rgba(251,191,36,0.5)]' 
-                      : 'bg-emerald-500 dark:shadow-[0_0_10px_rgba(16,185,129,0.5)]'
-                  : 'bg-slate-200 dark:bg-slate-800/80'
+                      ? 'bg-amber-400' 
+                      : 'bg-emerald-500'
+                  : 'bg-zinc-200 dark:bg-zinc-800'
               }`}
             />
           ))}
         </div>
+      </div>
 
-        {/* Nastavení délky */}
-        <div className="flex justify-between items-end mb-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
-          <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{t.length}</label>
-          <span className="text-3xl font-light text-slate-900 dark:text-white leading-none font-mono tracking-tight">{length}</span>
+      {/* Length control - Spreads full width */}
+      <div>
+        <div className="flex justify-between items-center mb-6 pt-4 border-t border-zinc-100 dark:border-white/[0.05]">
+          <label className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+            {t.length}
+          </label>
+          <span className="text-3xl font-light text-zinc-900 dark:text-white font-mono tracking-tight transition-all leading-none">
+            {length}
+          </span>
         </div>
         <input
           type="range"
@@ -58,37 +66,26 @@ export const SettingsPanel = ({ t, length, options, strength, setLength, handleO
           max="64"
           value={length}
           onChange={(e) => setLength(Number(e.target.value))}
-          className="w-full h-1.5 bg-slate-200 dark:bg-slate-900 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-600 dark:hover:accent-emerald-400 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+          className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-full appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-600 dark:hover:accent-emerald-400 transition-all focus:outline-none"
         />
       </div>
 
-      {/* Volby znaků - Stabilní grid, neposouvá se */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full pt-6 border-t border-slate-200 dark:border-slate-700/50">
-        {config.map(({ id, label, sub }) => (
-          <label 
-            key={id} 
-            className={`flex items-center justify-between p-4 sm:p-5 rounded-2xl border transition-all cursor-pointer select-none group ${
-              options[id]
-                ? 'bg-indigo-50 border-indigo-200 dark:bg-indigo-500/10 dark:border-indigo-500/30'
-                : 'bg-white dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-800/50'
-            }`}
-          >
-            <div>
-              <div className="text-sm font-bold text-slate-800 dark:text-slate-200 transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-300">{label}</div>
-              <div className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-1 font-mono tracking-tight">{sub}</div>
-            </div>
-            <div className="relative inline-flex items-center shrink-0">
-              <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={options[id]}
-                onChange={() => handleOptionChange(id)}
-              />
-              <div className="w-12 h-6 sm:h-7 bg-slate-200 dark:bg-slate-900 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 sm:after:h-6 sm:after:w-6 after:transition-all peer-checked:bg-indigo-500 dark:peer-checked:bg-indigo-600 shadow-inner" />
-            </div>
-          </label>
+      {/* Options grid - Wider, cleaner with minimalist labels */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 pt-8 sm:pt-10 border-t border-zinc-100 dark:border-white/[0.05]">
+        {config.map(({ id, label }) => (
+          <div key={id} className="flex items-center justify-between group py-1">
+            <Label htmlFor={id} className="text-sm font-medium text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-200 transition-colors cursor-pointer">
+              {label}
+            </Label>
+            <Switch 
+              id={id}
+              checked={options[id]}
+              onCheckedChange={() => handleOptionChange(id)}
+            />
+          </div>
         ))}
       </div>
+
     </div>
   );
 };

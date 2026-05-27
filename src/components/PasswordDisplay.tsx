@@ -4,47 +4,43 @@ import { Copy, RefreshCw, Check } from 'lucide-react';
 interface Props {
   password: string;
   isGenerating: boolean;
-  strength: number;
   copied: boolean;
   onGenerate: () => void;
   onCopy: () => void;
 }
 
-export const PasswordDisplay = ({ password, isGenerating, strength, copied, onGenerate, onCopy }: Props) => (
-  <div className="relative group/input mb-10 w-full overflow-hidden rounded-3xl shrink-0">
-    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 dark:from-emerald-500/20 dark:to-cyan-500/20 blur-xl opacity-0 md:group-hover/input:opacity-100 transition-opacity duration-500" />
-    <div className="relative bg-slate-50 dark:bg-black/60 p-6 sm:p-10 flex flex-col items-center justify-center border border-slate-200 dark:border-slate-700/50 md:hover:border-slate-300 md:dark:hover:border-slate-600 transition-colors w-full min-h-[220px]">
+export const PasswordDisplay = ({ password, isGenerating, copied, onGenerate, onCopy }: Props) => (
+  <div className="relative mb-12 group">
+    <div className="relative flex flex-col items-center justify-center gap-10 p-8 sm:p-10 rounded-[2rem] bg-zinc-50 dark:bg-[#121214] border border-zinc-200/80 dark:border-white/[0.05] transition-colors w-full min-h-[260px]">
       
-      {/* Zobrazení hesla - Velké písmo, break-all, vycentrováno */}
-      <div className="flex-1 w-full flex items-center justify-center mb-8 min-h-[80px]">
+      <div className="w-full flex items-center justify-center overflow-x-auto py-4 px-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         <span 
-          className={`text-3xl sm:text-4xl lg:text-5xl font-mono tracking-tight break-all text-center transition-all duration-300 font-light leading-snug md:leading-tight w-full ${
-            isGenerating ? 'opacity-0 scale-95 blur-md' : 'opacity-100 scale-100 blur-0'
-          } ${strength < 4 ? 'text-slate-900 dark:text-white' : 'text-emerald-600 dark:text-emerald-400'}`}
+          className={`text-3xl sm:text-4xl lg:text-5xl font-mono tracking-tight whitespace-nowrap text-center transition-all duration-300 font-light leading-none ${
+            isGenerating ? 'opacity-0 blur-md scale-95' : 'opacity-100 blur-0 scale-100'
+          } text-zinc-900 dark:text-white`}
         >
           {password}
         </span>
       </div>
 
-      {/* Ovládací tlačítka - Přesunuta pod heslo, masivně zvětšena */}
-      <div className="flex gap-3 sm:gap-4 w-full max-w-sm mx-auto mt-auto pt-4 border-t border-slate-200 dark:border-slate-700/50">
+      <div className="flex gap-4 sm:gap-6 w-full max-w-sm mx-auto">
         <button
           onClick={onGenerate}
-          className="w-16 sm:w-20 h-16 bg-slate-200 md:hover:bg-slate-300 dark:bg-slate-800 md:dark:hover:bg-slate-700 rounded-2xl transition-all duration-200 text-slate-600 md:hover:text-slate-900 dark:text-slate-300 md:dark:hover:text-white active:rotate-180 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-600 flex items-center justify-center shrink-0 shadow-sm"
+          className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-white bg-zinc-200/50 dark:bg-white/5 hover:bg-zinc-300/50 dark:hover:bg-white/10 transition-all duration-300 active:rotate-180 focus:outline-none"
         >
-          <RefreshCw size={24} strokeWidth={1.5} className="sm:w-6 sm:h-6" />
+          <RefreshCw size={28} strokeWidth={1.5} />
         </button>
         <button
           onClick={onCopy}
           disabled={!password}
-          className={`h-16 flex-1 rounded-2xl transition-all duration-300 flex items-center justify-center active:scale-95 overflow-hidden relative focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900 shadow-lg ${
+          className={`flex-1 h-16 sm:h-20 rounded-2xl sm:rounded-3xl transition-all duration-500 focus:outline-none overflow-hidden relative shadow-lg active:scale-95 ${
             copied 
-              ? 'bg-emerald-500 text-white shadow-[0_0_30px_rgba(16,185,129,0.4)] focus:ring-emerald-500' 
-              : 'bg-indigo-600 md:hover:bg-indigo-700 dark:bg-indigo-500 md:dark:hover:bg-indigo-400 text-white shadow-[0_0_30px_rgba(79,70,229,0.3)] focus:ring-indigo-500'
+              ? 'bg-zinc-900 dark:bg-white text-white dark:text-zinc-900' 
+              : 'bg-zinc-200/50 dark:bg-white/5 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-300/50 dark:hover:bg-white/10'
           }`}
         >
           <div className="relative z-10 flex items-center justify-center">
-            {copied ? <Check size={28} className="animate-in zoom-in duration-200" /> : <Copy size={28} />}
+            {copied ? <Check size={32} strokeWidth={2} className="animate-in zoom-in duration-300" /> : <Copy size={32} strokeWidth={1.5} />}
           </div>
         </button>
       </div>
