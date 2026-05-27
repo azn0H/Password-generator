@@ -30,6 +30,8 @@ src/
 │   └── translations.ts
 ├── App.tsx
 └── main.tsx
+
+```
 ## Instalace a Spuštění
 
 npm install
