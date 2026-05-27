@@ -10,7 +10,7 @@ export const usePasswordGenerator = () => {
     return (saved as 'cs' | 'en') || 'cs';
   });
 
-  const [isDark, setIsDark] = useState(() => {
+  const [isDark, setIsDark] = useState<boolean>(() => {
     const saved = localStorage.getItem('pg-theme-dark');
     return saved !== null ? JSON.parse(saved) : true;
   });
@@ -116,8 +116,8 @@ export const usePasswordGenerator = () => {
     } catch (err) {}
   };
 
-  const toggleLang = () => setLang(prev => prev === 'cs' ? 'en' : 'cs');
-  const toggleDark = () => setIsDark(prev => !prev);
+  const toggleLang = () => setLang((prev: 'cs' | 'en') => prev === 'cs' ? 'en' : 'cs');
+  const toggleDark = () => setIsDark((prev: boolean) => !prev);
 
   return {
     password, copied, isGenerating, lang, isDark, length, options,

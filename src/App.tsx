@@ -1,4 +1,3 @@
-import React from 'react';
 import { usePasswordGenerator } from './hooks/usePasswordGenerator';
 import { translations } from './utils/translations';
 import { TopNavigation } from './components/TopNavigation';
